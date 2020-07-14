@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Movie from '../interfaces/movie-model';
 
 
@@ -7,7 +7,7 @@ interface PropTypes {
 }
 
 
-const Movie: React.FC<PropTypes> = ({ movie }) => {
+const MovieBox: React.FC<PropTypes> = ({ movie }) => {
   return (
     <>
       <p>{movie.title}</p>
@@ -15,4 +15,4 @@ const Movie: React.FC<PropTypes> = ({ movie }) => {
   );
 }
 
-export default Movie;
+export default MovieBox;

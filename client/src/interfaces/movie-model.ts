@@ -13,5 +13,5 @@ export default interface Movie {
   vote_average: number;
   overview: string;
   release_date: string;
-  in_my_list?: string;
+  in_my_list?: boolean;
 }

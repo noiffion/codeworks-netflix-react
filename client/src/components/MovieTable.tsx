@@ -33,7 +33,9 @@ const MovieTable: React.FC<PropTypes> = () => {
   const [discoverMovies, setDiscoverMovies] = useState<Movie[]>([]);
 
   function addToMyListMovies(movie: Movie): Movie {
+    if (myListMovies.includes(movie)) return movie;
     const myList: Movie[] = [...myListMovies];
+    movie.in_my_list = true;
     myList.push(movie);
     setMyListMovies(myList);
     return movie;
@@ -42,6 +44,7 @@ const MovieTable: React.FC<PropTypes> = () => {
   function removeFromMyListMoves(movie: Movie): Movie {
     const myList: Movie[] = [...myListMovies];
     const newList: Movie[] = myList.filter(motpic => motpic.title !== movie.title);
+    movie.in_my_list = false;
     setMyListMovies(newList);
     return movie;
   }
@@ -63,7 +66,7 @@ const MovieTable: React.FC<PropTypes> = () => {
       <SearchBar/>
       <section style={st.lists}>
         {myListMovies.length
-          ? <MovieList title="My List" movies={discoverMovies} addOrRemove={addOrRemove}/>
+          ? <MovieList title="My List" movies={myListMovies} addOrRemove={addOrRemove}/>
           : null
         }
         <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>

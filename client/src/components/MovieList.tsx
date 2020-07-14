@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CSS from 'csstype';
 import Movie from '../interfaces/movie-model';
+import MovieBox from './MovieBox';
 
 
 const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300/';
@@ -8,7 +9,6 @@ const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300/';
 interface Styles {
   movieBox: CSS.Properties;
   movieList: CSS.Properties;
-
 }
 
 
@@ -21,22 +21,17 @@ const st: Styles = {
   },
   movieBox: {
     border: '1px solid blue',
-    minHeight: '10vh',
-    minWidth: '20vw',
-
-
+    cursor: 'pointer',
+    minHeight: '20vh',
+    minWidth: '15vw',
   }
-
-
 }
 
 const movieBoxStyleMaker = (movie: Movie, movieBox: CSS.Properties): CSS.Properties => {
   const mBox = {...movieBox}
-  mBox.backgroundImage = `url("${imagePrependURL}${movie.poster_path}")`;
+  mBox.backgroundImage = `url("${imagePrependURL}${movie.backdrop_path}")`;
   return mBox;
 }
-
-
 
 interface PropTypes {
   title: string;
@@ -45,15 +40,13 @@ interface PropTypes {
 
 
 const MovieList: React.FC<PropTypes> = ({title, movies}) => {
-
   const movieList = movies.map((movie, index) => (
-    <div
+    <MovieBox
       key={`${index}_${movie.title}`}
-      style={movieBoxStyleMaker(movie, st.movieBox)}
-    >{movie.title}
-    </div>
+      movie={movie}
+      boxStyle={movieBoxStyleMaker(movie, st.movieBox)}
+    />
   ));
-
 
   return (
     <>

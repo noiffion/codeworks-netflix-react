@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MovieTable from './components/MovieTable';
-import SearchBar from './components/SearchBar';
 import * as serviceWorker from './SWorker/serviceWorker';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <SearchBar />
     <MovieTable />
   </React.StrictMode>,
   document.getElementById('root')

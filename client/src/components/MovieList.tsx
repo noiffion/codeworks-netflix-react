@@ -9,6 +9,7 @@ const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300/';
 interface Styles {
   movieBox: CSS.Properties;
   movieList: CSS.Properties;
+  listTitle: CSS.Properties;
 }
 
 
@@ -24,12 +25,15 @@ const st: Styles = {
     cursor: 'pointer',
     minHeight: '20vh',
     minWidth: '15vw',
+  },
+  listTitle: {
+    paddingLeft: '2vw',
   }
 }
 
-const movieBoxStyleMaker = (movie: Movie, movieBox: CSS.Properties): CSS.Properties => {
+const movieBackgrMaker = (movie: Movie, movieBox: CSS.Properties): CSS.Properties => {
   const mBox = {...movieBox}
-  mBox.backgroundImage = `url("${imagePrependURL}${movie.backdrop_path}")`;
+  mBox.backgroundImage = `url('${imagePrependURL}${movie.backdrop_path}')`;
   return mBox;
 }
 
@@ -44,13 +48,13 @@ const MovieList: React.FC<PropTypes> = ({title, movies}) => {
     <MovieBox
       key={`${index}_${movie.title}`}
       movie={movie}
-      boxStyle={movieBoxStyleMaker(movie, st.movieBox)}
+      boxStyle={movieBackgrMaker(movie, st.movieBox)}
     />
   ));
 
   return (
     <>
-      <h3>{title}</h3>
+      <h3 style={st.listTitle}>{title}</h3>
       <section style={st.movieList}> {movieList} </section>
     </>
   );

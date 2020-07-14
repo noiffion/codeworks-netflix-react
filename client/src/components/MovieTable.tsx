@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import CSS from 'csstype';
 import MovieList from './MovieList';
+import SearchBar from './SearchBar';
 import Movie from '../interfaces/movie-model';
 
 
 interface Styles {
   movieTable: CSS.Properties;
+  lists: CSS.Properties;
 }
 
 const st: Styles = {
   movieTable: {
     border: '1px solid #141414',
-    marginTop: '0',
-    padding: '0 2vw',
+    margin: '0',
+    padding: '0',
     backgroundColor: '#141414',
     color: '#d6d7d7',
     fontFamily: 'Oxygen',
+  },
+  lists: {
+    paddingLeft: '2vw',
   }
 }
 
@@ -51,8 +56,11 @@ const MovieTable: React.FC<PropTypes> = () => {
 
   return (
     <div style={st.movieTable}>
-      {myListMovies.length ? <MovieList title="My List" movies={discoverMovies}/> : null}
-      <MovieList title="Discover" movies={discoverMovies}/>
+      <SearchBar/>
+      <section style={st.lists}>
+        {myListMovies.length ? <MovieList title="My List" movies={discoverMovies}/> : null}
+        <MovieList title="Discover" movies={discoverMovies}/>
+      </section>
     </div>
   );
 }

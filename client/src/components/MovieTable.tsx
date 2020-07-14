@@ -3,11 +3,15 @@ import CSS from 'csstype';
 import MovieList from './MovieList';
 import SearchBar from './SearchBar';
 import Movie from '../interfaces/movie-model';
+import Genre from '../interfaces/category-model';
+import { getDiscoverMovies, getCategories } from '../apiService/apiClient';
 
 
 interface Styles {
   movieTable: CSS.Properties;
   lists: CSS.Properties;
+  categorySelect: CSS.Properties;
+  categoryDiv: CSS.Properties;
 }
 
 const st: Styles = {
@@ -22,6 +26,16 @@ const st: Styles = {
   },
   lists: {
     paddingLeft: '2vw',
+  },
+  categoryDiv: {
+    marginTop: '5vh'
+  },
+  categorySelect: {
+    backgroundColor: '#141414',
+    color: '#d6d7d7',
+    marginLeft: '1vw',
+    padding: '0.5%',
+    borderRadius: '3px',
   }
 }
 
@@ -32,8 +46,11 @@ const MovieTable: React.FC<PropTypes> = () => {
 
   const [myListMovies, setMyListMovies] = useState<Movie[]>([]);
   const [discoverMovies, setDiscoverMovies] = useState<Movie[]>([]);
+  const [categoryMovies, setCategoryMovies] = useState<Movie[]>([]);
+  const [movieCategories, setMovieCategories] = useState<Genre[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  function addToMyListMovies(movie: Movie): Movie {
+  const addToMyListMovies = (movie: Movie): Movie => {
     if (myListMovies.includes(movie)) return movie;
     const myList: Movie[] = [...myListMovies];
     movie.in_my_list = true;
@@ -42,7 +59,7 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
-  function removeFromMyListMoves(movie: Movie): Movie {
+  const removeFromMyListMoves = (movie: Movie): Movie => {
     const myList: Movie[] = [...myListMovies];
     const newList: Movie[] = myList.filter(motpic => motpic.title !== movie.title);
     movie.in_my_list = false;
@@ -50,17 +67,26 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
-  function addOrRemove(add: boolean, movie: Movie): Movie {
+  const addOrRemove = (add: boolean, movie: Movie): Movie => {
     return add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
   }
 
   useEffect(():void => {
-    fetch('https://movied.herokuapp.com/discover')
-      .then(results => results.json())
-      .then(movies => setDiscoverMovies(movies))
+    getDiscoverMovies()
+     .then(movies => setDiscoverMovies(movies))
+     .catch(err => console.error(err));
+    getCategories()
+      .then(categories => setMovieCategories(categories))
       .catch(err => console.error(err));
   }, []);
 
+  const renderCategoryOfMovies = (category: any): void => {
+    console.log(category);
+  }
+
+  const options = movieCategories.map((category, index) => (
+    <option key={`${index}_${category.name}`} value={category.name}> {category.name} </option>
+  ));
 
   return (
     <div style={st.movieTable}>
@@ -71,12 +97,19 @@ const MovieTable: React.FC<PropTypes> = () => {
           : null
         }
         <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>
-        <label htmlFor="categories">Choose a genre</label>
-        <select name="categories" id="categories">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </select>
+        <div style={st.categoryDiv}>
+          <label htmlFor="categories">Choose a genre</label>
+          <select
+            id="categories"
+            name="categories"
+            value={selectedCategory}
+            onChange={(event) => setSelectedCategory(event.target.value)}
+            style={st.categorySelect}
+          >
+            {options}
+          </select>
+        </div>
+        <MovieList title={selectedCategory} movies={categoryMovies} addOrRemove={addOrRemove}/>
       </section>
     </div>
   );

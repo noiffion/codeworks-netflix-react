@@ -5,7 +5,6 @@ import MovieBox from './MovieBox';
 
 
 interface Styles {
-  movieBox: CSS.Properties;
   movieList: CSS.Properties;
   listTitle: CSS.Properties;
 }
@@ -16,10 +15,6 @@ const st: Styles = {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  movieBox: {
-    border: '1px solid blue',
-
   },
   listTitle: {
     paddingLeft: '4vw',

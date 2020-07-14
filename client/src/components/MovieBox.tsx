@@ -28,6 +28,8 @@ const MovieBox: React.FC<PropTypes> = ({ movie, addOrRemove }) => {
     align-items: flex-end;
     min-height: 150px;
     min-width: 250px;
+    max-height: 150px;
+    max-width: 250px;
     margin-left: 5px;
     background-image: url('${imagePrependURL}${movie.backdrop_path}');
     &:hover ${AddRemoveIcon} {

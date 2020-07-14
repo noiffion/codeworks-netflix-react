@@ -12,6 +12,7 @@ interface Styles {
 
 const st: Styles = {
   movieTable: {
+    height: '100vh',
     border: '1px solid #141414',
     margin: '0',
     padding: '0',

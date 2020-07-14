@@ -17,7 +17,8 @@ const st: Styles = {
     margin: '0',
     padding: '0',
     width: '100%',
-    position: 'sticky',
+    position: 'fixed',
+    top: '0',
   },
   navList: {
     margin: '0',

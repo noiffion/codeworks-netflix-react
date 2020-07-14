@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import CSS from 'csstype';
 import Movie from '../interfaces/movie-model';
 import MovieBox from './MovieBox';
@@ -27,7 +27,7 @@ const st: Styles = {
 }
 
 interface AddOrRemove {
-  (add: boolean, movie: Movie): void;
+  (add: boolean, movie: Movie): Movie;
 }
 
 interface PropTypes {

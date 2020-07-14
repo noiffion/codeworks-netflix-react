@@ -12,13 +12,13 @@ interface Styles {
 
 const st: Styles = {
   movieTable: {
-    height: '100vh',
-    border: '1px solid #141414',
-    margin: '0',
-    padding: '0',
+    height: '80vh',
+    margin: '10vh 0 0 0',
+    padding: '5vh 0',
     backgroundColor: '#141414',
     color: '#d6d7d7',
     fontFamily: 'Oxygen',
+    overflow: 'scroll',
   },
   lists: {
     paddingLeft: '2vw',
@@ -50,8 +50,8 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
-  function addOrRemove(add: boolean, movie: Movie,): void {
-    add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
+  function addOrRemove(add: boolean, movie: Movie): Movie {
+    return add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
   }
 
   useEffect(():void => {
@@ -71,6 +71,12 @@ const MovieTable: React.FC<PropTypes> = () => {
           : null
         }
         <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>
+        <label htmlFor="categories">Choose a genre</label>
+        <select name="categories" id="categories">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
       </section>
     </div>
   );

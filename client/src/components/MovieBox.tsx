@@ -6,21 +6,25 @@ import addedBtnSrc from '../images/btn-added.svg';
 import styled from 'styled-components';
 
 
-interface PropTypes {
-  movie: Movie;
+interface AddOrRemove {
+  (add: boolean, movie: Movie): void;
 }
 
 
-const MovieBox: React.FC<PropTypes> = ({ movie }) => {
+interface PropTypes {
+  movie: Movie;
+  addOrRemove: AddOrRemove;
+}
 
-  const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300';
 
+const MovieBox: React.FC<PropTypes> = ({ movie, addOrRemove }) => {
 
   const AddRemoveIcon = styled.img`
     visibility: hidden;
     transition: visibility 0.1s;
   `
 
+  const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300';
   const Box = styled.article`
     display: flex;
     flex-direction: row;
@@ -39,7 +43,11 @@ const MovieBox: React.FC<PropTypes> = ({ movie }) => {
   return (
     <Box>
       <span>{movie.title}</span>
-      <AddRemoveIcon src={movie.in_my_list ? addedBtnSrc : addBtnSrc}></AddRemoveIcon>
+      <AddRemoveIcon
+        src={movie.in_my_list ? addedBtnSrc : addBtnSrc}
+        onClick={() => addOrRemove(!movie.in_my_list, movie)}
+      >
+      </AddRemoveIcon>
     </Box>
   );
 }

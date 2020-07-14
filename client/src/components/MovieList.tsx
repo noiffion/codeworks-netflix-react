@@ -26,17 +26,23 @@ const st: Styles = {
   }
 }
 
+interface AddOrRemove {
+  (add: boolean, movie: Movie): void;
+}
+
 interface PropTypes {
   title: string;
   movies: Movie[];
+  addOrRemove: AddOrRemove;
 }
 
 
-const MovieList: React.FC<PropTypes> = ({title, movies}) => {
+const MovieList: React.FC<PropTypes> = ({title, movies, addOrRemove}) => {
   const movieList = movies.map((movie, index) => (
     <MovieBox
       key={`${index}_${movie.title}`}
       movie={movie}
+      addOrRemove={addOrRemove}
     />
   ));
 

@@ -46,7 +46,7 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
-  function addOrRemove(movie: Movie, add: boolean): void {
+  function addOrRemove(add: boolean, movie: Movie,): void {
     add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
   }
 
@@ -62,8 +62,11 @@ const MovieTable: React.FC<PropTypes> = () => {
     <div style={st.movieTable}>
       <SearchBar/>
       <section style={st.lists}>
-        {myListMovies.length ? <MovieList title="My List" movies={discoverMovies}/> : null}
-        <MovieList title="Discover" movies={discoverMovies}/>
+        {myListMovies.length
+          ? <MovieList title="My List" movies={discoverMovies} addOrRemove={addOrRemove}/>
+          : null
+        }
+        <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>
       </section>
     </div>
   );

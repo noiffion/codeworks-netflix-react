@@ -12,7 +12,6 @@ interface Styles {
   searchText: CSS.Properties;
 }
 
-
 const st: Styles = {
   navBar: {
     margin: '0',
@@ -55,6 +54,10 @@ const st: Styles = {
 
 interface PropTypes {}
 
+const submitHandler = (event: Event) => {
+  event.preventDefault();
+}
+
 
 const SearchBar: React.FC<PropTypes> = () => {
   return (
@@ -63,7 +66,7 @@ const SearchBar: React.FC<PropTypes> = () => {
         <li><img src={netFlixLogoSrc} height="100" width="200"></img></li>
         <li style={st.searchInputBox}>
           <img style={st.magnGlass} src={magGlassSrc} height="30" width="30"></img>
-          <form>
+          <form >
             <input type="text" style={st.searchText}/>
           </form>
         </li>

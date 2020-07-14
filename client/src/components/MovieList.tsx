@@ -4,14 +4,11 @@ import Movie from '../interfaces/movie-model';
 import MovieBox from './MovieBox';
 
 
-const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300/';
-
 interface Styles {
   movieBox: CSS.Properties;
   movieList: CSS.Properties;
   listTitle: CSS.Properties;
 }
-
 
 const st: Styles = {
   movieList: {
@@ -22,19 +19,11 @@ const st: Styles = {
   },
   movieBox: {
     border: '1px solid blue',
-    cursor: 'pointer',
-    minHeight: '20vh',
-    minWidth: '15vw',
+
   },
   listTitle: {
-    paddingLeft: '2vw',
+    paddingLeft: '4vw',
   }
-}
-
-const movieBackgrMaker = (movie: Movie, movieBox: CSS.Properties): CSS.Properties => {
-  const mBox = {...movieBox}
-  mBox.backgroundImage = `url('${imagePrependURL}${movie.backdrop_path}')`;
-  return mBox;
 }
 
 interface PropTypes {
@@ -48,7 +37,6 @@ const MovieList: React.FC<PropTypes> = ({title, movies}) => {
     <MovieBox
       key={`${index}_${movie.title}`}
       movie={movie}
-      boxStyle={movieBackgrMaker(movie, st.movieBox)}
     />
   ));
 

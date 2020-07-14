@@ -46,6 +46,10 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
+  function addOrRemove(movie: Movie, add: boolean): void {
+    add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
+  }
+
   useEffect(():void => {
     fetch('https://movied.herokuapp.com/discover')
       .then(results => results.json())

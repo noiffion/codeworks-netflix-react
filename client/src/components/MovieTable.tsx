@@ -7,7 +7,7 @@ import Genre from '../interfaces/category-model';
 import {
   getDiscoverMovies,
   getCategories,
-  getMoviesPerCategory } from '../apiService/apiClient';
+  getMoviesPerCategory } from '../apiMethods/apiClient';
 
 
 interface Styles {
@@ -70,7 +70,10 @@ const MovieTable: React.FC<PropTypes> = () => {
     return movie;
   }
 
-  const addOrRemove = (add: boolean, movie: Movie): Movie => {
+  interface AddOrRemove {
+    (add: boolean, movie: Movie): Movie;
+  }
+  const addOrRemove: AddOrRemove = (add: boolean, movie: Movie): Movie => {
     return add ? addToMyListMovies(movie) : removeFromMyListMoves(movie);
   }
 
@@ -86,7 +89,6 @@ const MovieTable: React.FC<PropTypes> = () => {
         setGenreMovies(ctgMovies)
       })
       .catch(err => console.error(err));
-
   }, []);
 
   const options = movieCategories.map((category, index) => (
@@ -105,31 +107,31 @@ const MovieTable: React.FC<PropTypes> = () => {
   }
 
   return (
-    <div style={st.movieTable}>
-      <SearchBar/>
-      <section style={st.lists}>
-        {myListMovies.length
-          ? <MovieList title="My List" movies={myListMovies} addOrRemove={addOrRemove}/>
-          : null
-        }
-        <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>
-        <div style={st.categoryDiv}>
-          <label htmlFor="categories">Choose a genre</label>
-          <select
-            id="categories"
-            name="categories"
-            value={selectedCategory}
-            style={st.categorySelect}
-            onChange={loadCategoryMovies}
-          >
-            {options}
-          </select>
-        </div>
-        {genreMovies.length && (
-          <MovieList title={selectedCategory} movies={genreMovies} addOrRemove={addOrRemove}/>)
-        }
-      </section>
-    </div>
+      <div style={st.movieTable}>
+        <SearchBar/>
+        <section style={st.lists}>
+          {myListMovies.length
+            ? <MovieList title="My List" movies={myListMovies} addOrRemove={addOrRemove}/>
+            : null
+          }
+          <MovieList title="Discover" movies={discoverMovies} addOrRemove={addOrRemove}/>
+          <div style={st.categoryDiv}>
+            <label htmlFor="categories">Choose a genre</label>
+            <select
+              id="categories"
+              name="categories"
+              value={selectedCategory}
+              style={st.categorySelect}
+              onChange={loadCategoryMovies}
+            >
+              {options}
+            </select>
+          </div>
+          {genreMovies.length && (
+            <MovieList title={selectedCategory} movies={genreMovies} addOrRemove={addOrRemove}/>)
+          }
+        </section>
+      </div>
   );
 }
 

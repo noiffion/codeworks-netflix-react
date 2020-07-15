@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Movie from '../interfaces/movie-model';
 import addBtnSrc from '../images/btn-add.svg';
 import addedBtnSrc from '../images/btn-added.svg';
@@ -20,6 +20,7 @@ const MovieBox: React.FC<PropTypes> = ({ movie, addOrRemove }) => {
     visibility: hidden;
     transition: visibility 0.1s;
   `
+
   const imagePrependURL: string = 'https://image.tmdb.org/t/p/w300';
   const Box = styled.article`
     display: flex;

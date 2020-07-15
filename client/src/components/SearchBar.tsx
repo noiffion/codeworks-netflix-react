@@ -65,7 +65,7 @@ const SearchBar: React.FC<PropTypes> = () => {
     <nav style={st.navBar}>
       <ul style={st.navList}>
         <li>
-          <img src={netFlixLogoSrc} height="100" width="200"></img>
+          <img src={netFlixLogoSrc} height="100" width="200" alt="Netflix logo"></img>
         </li>
         <li style={st.searchInputBox}>
           <img

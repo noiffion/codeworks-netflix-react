@@ -76,8 +76,8 @@ const MovieTable: React.FC<PropTypes> = () => {
 
   useEffect(():void => {
     getDiscoverMovies()
-     .then(movies => setDiscoverMovies(movies))
-     .catch(err => console.error(err));
+      .then(movies => setDiscoverMovies(movies))
+      .catch(err => console.error(err));
     getCategories()
       .then(categories => setMovieCategories(categories))
       .catch(err => console.error(err));
@@ -92,6 +92,17 @@ const MovieTable: React.FC<PropTypes> = () => {
   const options = movieCategories.map((category, index) => (
     <option key={`${index}_${category.name}`} value={category.name}> {category.name} </option>
   ));
+  const loadCategoryMovies = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    setSelectedCategory(event.target.value);
+    const selectedCategoryObj = movieCategories.find(category => (
+      category.name === event.target.value
+    ));
+    if (selectedCategoryObj !== undefined) {
+      getMoviesPerCategory(selectedCategoryObj.id)
+        .then(ctgMovies => setGenreMovies(ctgMovies))
+        .catch(err => console.error(err));
+    }
+  }
 
   return (
     <div style={st.movieTable}>
@@ -108,20 +119,8 @@ const MovieTable: React.FC<PropTypes> = () => {
             id="categories"
             name="categories"
             value={selectedCategory}
-            onChange={async (event) => {
-              setSelectedCategory(event.target.value);
-              const selectedCategoryObj = movieCategories.find(category => (
-                category.name === event.target.value
-              ));
-              if (selectedCategoryObj !== undefined) {
-                getMoviesPerCategory(selectedCategoryObj.id)
-                  .then(ctgMovies => {
-                    setGenreMovies(ctgMovies)
-                  })
-                  .catch(err => console.error(err));
-              }
-            }}
             style={st.categorySelect}
+            onChange={loadCategoryMovies}
           >
             {options}
           </select>

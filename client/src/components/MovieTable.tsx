@@ -4,7 +4,10 @@ import MovieList from './MovieList';
 import SearchBar from './SearchBar';
 import Movie from '../interfaces/movie-model';
 import Genre from '../interfaces/category-model';
-import { getDiscoverMovies, getCategories } from '../apiService/apiClient';
+import {
+  getDiscoverMovies,
+  getCategories,
+  getMoviesPerCategory } from '../apiService/apiClient';
 
 
 interface Styles {
@@ -46,9 +49,9 @@ const MovieTable: React.FC<PropTypes> = () => {
 
   const [myListMovies, setMyListMovies] = useState<Movie[]>([]);
   const [discoverMovies, setDiscoverMovies] = useState<Movie[]>([]);
-  const [categoryMovies, setCategoryMovies] = useState<Movie[]>([]);
+  const [genreMovies, setGenreMovies] = useState<Movie[]>([]);
   const [movieCategories, setMovieCategories] = useState<Genre[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Action');
 
   const addToMyListMovies = (movie: Movie): Movie => {
     if (myListMovies.includes(movie)) return movie;
@@ -78,11 +81,13 @@ const MovieTable: React.FC<PropTypes> = () => {
     getCategories()
       .then(categories => setMovieCategories(categories))
       .catch(err => console.error(err));
-  }, []);
+    getMoviesPerCategory(28)
+      .then(ctgMovies => {
+        setGenreMovies(ctgMovies)
+      })
+      .catch(err => console.error(err));
 
-  const renderCategoryOfMovies = (category: any): void => {
-    console.log(category);
-  }
+  }, []);
 
   const options = movieCategories.map((category, index) => (
     <option key={`${index}_${category.name}`} value={category.name}> {category.name} </option>
@@ -103,13 +108,27 @@ const MovieTable: React.FC<PropTypes> = () => {
             id="categories"
             name="categories"
             value={selectedCategory}
-            onChange={(event) => setSelectedCategory(event.target.value)}
+            onChange={async (event) => {
+              setSelectedCategory(event.target.value);
+              const selectedCategoryObj = movieCategories.find(category => (
+                category.name === event.target.value
+              ));
+              if (selectedCategoryObj !== undefined) {
+                getMoviesPerCategory(selectedCategoryObj.id)
+                  .then(ctgMovies => {
+                    setGenreMovies(ctgMovies)
+                  })
+                  .catch(err => console.error(err));
+              }
+            }}
             style={st.categorySelect}
           >
             {options}
           </select>
         </div>
-        <MovieList title={selectedCategory} movies={categoryMovies} addOrRemove={addOrRemove}/>
+        {genreMovies.length && (
+          <MovieList title={selectedCategory} movies={genreMovies} addOrRemove={addOrRemove}/>)
+        }
       </section>
     </div>
   );

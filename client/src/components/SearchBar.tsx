@@ -64,9 +64,17 @@ const SearchBar: React.FC<PropTypes> = () => {
   return (
     <nav style={st.navBar}>
       <ul style={st.navList}>
-        <li><img src={netFlixLogoSrc} height="100" width="200"></img></li>
+        <li>
+          <img src={netFlixLogoSrc} height="100" width="200"></img>
+        </li>
         <li style={st.searchInputBox}>
-          <img style={st.magnGlass} src={magGlassSrc} height="30" width="30"></img>
+          <img
+            style={st.magnGlass}
+            src={magGlassSrc}
+            height="30"
+            width="30"
+            alt="magnifying glass icon">
+          </img>
           <form >
             <input type="text" style={st.searchText}/>
           </form>

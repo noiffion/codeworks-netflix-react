@@ -11,3 +11,7 @@ export async function getCategories(): Promise<any> {
     .then(results => results.json());
 }
 
+export async function getMoviesPerCategory(id:number): Promise<any> {
+  return fetch(`${apiBaseURL}/categories/${id}`)
+    .then(results => results.json());
+}
